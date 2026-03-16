@@ -1,5 +1,4 @@
 #include <iostream>
-#include <vector>
 using namespace std;
 
 int main() {
@@ -11,7 +10,11 @@ int main() {
     cout << "Input the number of subjects: ";
     cin >> sub;
 
-    vector<vector<double>> grades(student, vector<double>(sub));
+    double** grades = new double*[student];
+
+    for (int i = 0; i < student; i++) {
+        grades[i] = new double[sub];
+    }
 
     cout << "\nEnter the Grades:\n";
 
@@ -19,15 +22,15 @@ int main() {
         cout << "Student " << i + 1 << "\n";
         for (int j = 0; j < sub; j++) {
             cout << "Subject " << j + 1 << ": ";
-            cin >> grades[i][j];
+            cin >> *(*(grades + i) + j);
         }
     }
 
-    double highest = grades[0][0];
+    double highest = *(*(grades + 0) + 0);
 
     cout << "\nStudent Grades:\n";
 
-    cout << "            ";
+    cout << "               ";
     for (int j = 0; j < sub; j++) {
         cout << "Sub" << j + 1 << " ";
     }
@@ -39,11 +42,11 @@ int main() {
         cout << "Student " << i + 1 << ":   ";
 
         for (int j = 0; j < sub; j++) {
-            cout << grades[i][j] << "    ";
-            sum += grades[i][j];
+            cout << *(*(grades + i) + j) << "    ";
+            sum += *(*(grades + i) + j);
 
-            if (grades[i][j] > highest)
-                highest = grades[i][j];
+            if (*(*(grades + i) + j) > highest)
+                highest = *(*(grades + i) + j);
         }
 
         double avg = sum / sub;
